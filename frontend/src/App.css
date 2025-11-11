@@ -205,3 +205,36 @@ header h1 {
 .status-completed {
   background-color: #27ae60; /* Verde mais vivo para concluído */
 }
+
+/* ... (todo o seu CSS anterior) ... */
+
+/* Ajuste no formulário para 3 colunas */
+.task-form {
+  align-items: flex-end; /* Alinha todos na base */
+}
+
+/* Garante que o botão vá para baixo em telas menores se quebrar */
+.task-form button {
+  flex-shrink: 0; /* Impede o botão de encolher */
+  min-width: 150px; /* Largura mínima para o botão */
+}
+
+.form-control input[type="date"] {
+  padding: 0.65rem 0.75rem; /* Ajuste de padding para type="date" */
+}
+
+/* Meta-dados da tarefa (categoria e data) */
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.task-date {
+  font-size: 0.85rem;
+  color: #555;
+  background-color: #eee;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+}
