@@ -23,6 +23,9 @@ function TaskItem({ task, onDelete, onUpdate }) {
         <div>
           <h3>{task.titulo}</h3>
           <span className="task-category">{task.categoria}</span>
+          <span className={task.status ? 'status-completed' : 'status-pending'}>
+              {task.status ? 'Concluído' : 'Pendente'}
+            </span>
         </div>
       </div>
       <button className="delete-btn" onClick={handleDeleteClick}>
