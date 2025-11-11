@@ -11,13 +11,11 @@ const db = mysql.createConnection({
     host: "localhost",      // Ou o IP do seu servidor MySQL
     user: "root",           // Seu usuário do MySQL
     password: "aluno",   // Sua senha do MySQL
-    database: "eco_tasks"   // O banco de dados que criamos [cite: 40]
+    database: "eco_tasks"   // O banco de dados que criamos
 });
 
 // 2. Middlewares
-// Permite que o Express entenda JSON vindo do frontend
 app.use(express.json());
-// Permite que o frontend (em outra porta) acesse esta API
 app.use(cors());
 
 // 3. Rota de Teste (Opcional)
@@ -27,9 +25,10 @@ app.get("/", (req, res) => {
 
 // 4. Implementação das Rotas CRUD
 
-// Rota GET: Listar todas as tarefas [cite: 51]
+// Rota GET: Listar todas as tarefas
 app.get("/tarefas", (req, res) => {
-    const q = "SELECT * FROM tarefas ORDER BY id DESC";
+    // ATUALIZADO: Seleciona a data_tarefa também
+    const q = "SELECT *, DATE_FORMAT(data_tarefa, '%Y-%m-%d') AS data_tarefa FROM tarefas ORDER BY id DESC";
     
     db.query(q, (err, data) => {
         if (err) {
@@ -40,28 +39,28 @@ app.get("/tarefas", (req, res) => {
     });
 });
 
-// Rota POST: Adicionar nova tarefa [cite: 53]
+// Rota POST: Adicionar nova tarefa
 app.post("/tarefas", (req, res) => {
-    // Pega 'titulo' e 'categoria' do corpo da requisição
-    const { titulo, categoria } = req.body;
+    // ATUALIZADO: Pega 'data_tarefa' do corpo da requisição
+    const { titulo, categoria, data_tarefa } = req.body;
     
-    // O 'status' já tem 'false' como padrão no banco [cite: 46]
-    const q = "INSERT INTO tarefas (titulo, categoria) VALUES (?, ?)";
+    // ATUALIZADO: Insere a data_tarefa (pode ser null se não for enviada)
+    const q = "INSERT INTO tarefas (titulo, categoria, data_tarefa) VALUES (?, ?, ?)";
     
-    db.query(q, [titulo, categoria], (err, data) => {
+    // ATUALIZADO: Passa data_tarefa para a query
+    db.query(q, [titulo, categoria, data_tarefa || null], (err, data) => {
         if (err) {
             console.log("Erro ao criar tarefa:", err);
             return res.status(500).json(err);
         }
-        // Retorna o ID da nova tarefa criada
         return res.json({ message: "Tarefa criada com sucesso!", id: data.insertId });
     });
 });
 
-// Rota PUT: Atualizar status da tarefa [cite: 55]
+
+// Rota PUT: Atualizar status da tarefa
 app.put("/tarefas/:id", (req, res) => {
     const { id } = req.params;
-    // Pega o novo 'status' (true ou false) do corpo da requisição
     const { status } = req.body;
     
     const q = "UPDATE tarefas SET status = ? WHERE id = ?";
@@ -79,7 +78,7 @@ app.put("/tarefas/:id", (req, res) => {
     });
 });
 
-// Rota DELETE: Remover tarefa [cite: 57]
+// Rota DELETE: Remover tarefa
 app.delete("/tarefas/:id", (req, res) => {
     const { id } = req.params;
     
@@ -100,7 +99,7 @@ app.delete("/tarefas/:id", (req, res) => {
 
 
 // 5. Iniciar o Servidor
-const PORT = 8800; // Porta padrão para o backend
+const PORT = 8800;
 app.listen(PORT, () => {
     console.log(`Backend 'EcoTasks' rodando em: http://localhost:${PORT} 🚀`);
 });

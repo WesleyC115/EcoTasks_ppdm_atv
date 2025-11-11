@@ -3,19 +3,24 @@ import { useState } from "react";
 function TaskForm({ onAddTask }) {
   const [titulo, setTitulo] = useState("");
   const [categoria, setCategoria] = useState("");
+  // NOVO ESTADO: Para a data
+  const [data, setData] = useState(""); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validação de campos obrigatórios [cite: 79]
+    // Validação de campos obrigatórios
     if (!titulo || !categoria) {
       alert("Por favor, preencha o título e a categoria.");
       return;
     }
     // Envia os dados para a função em App.jsx
-    onAddTask({ titulo, categoria });
+    // ATUALIZADO: Envia a data junto
+    onAddTask({ titulo, categoria, data_tarefa: data });
+    
     // Limpa o formulário
     setTitulo("");
     setCategoria("");
+    setData(""); // Limpa a data também
   };
 
   return (
@@ -40,6 +45,18 @@ function TaskForm({ onAddTask }) {
           onChange={(e) => setCategoria(e.target.value)}
         />
       </div>
+      
+      {/* NOVO: Campo de Data */}
+      <div className="form-control">
+        <label htmlFor="data">Data (Opcional):</label>
+        <input
+          id="data"
+          type="date"
+          value={data}
+          onChange={(e) => setData(e.target.value)}
+        />
+      </div>
+
       <button type="submit">Adicionar Tarefa</button>
     </form>
   );
