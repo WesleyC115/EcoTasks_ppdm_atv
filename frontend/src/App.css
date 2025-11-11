@@ -181,3 +181,27 @@ header h1 {
   font-size: 1rem;
   background-color: #fff;
 }
+
+.task-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+/* Estilos para o Status (Concluído / Pendente) */
+.status-pending,
+.status-completed {
+  font-size: 0.85rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  color: white;
+  font-weight: 500;
+}
+
+.status-pending {
+  background-color: #f39c12; /* Laranja/Amarelo para pendente */
+}
+
+.status-completed {
+  background-color: #27ae60; /* Verde mais vivo para concluído */
+}
