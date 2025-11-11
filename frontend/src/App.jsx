@@ -4,7 +4,7 @@ import TaskList from "./components/TaskList";
 import "./App.css";
 
 // URL base da sua API. Ajuste se o seu backend rodar em outra porta.
-const API_URL = "http://localhost:3000/tarefas";
+const API_URL = "http://localhost:8800/tarefas";
 
 function App() {
   const [tasks, setTasks] = useState([]);
