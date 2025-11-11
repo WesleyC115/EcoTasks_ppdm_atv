@@ -102,5 +102,5 @@ app.delete("/tarefas/:id", (req, res) => {
 // 5. Iniciar o Servidor
 const PORT = 8800; // Porta padrão para o backend
 app.listen(PORT, () => {
-    console.log(`Backend 'EcoTasks' rodando na porta ${PORT}! 🚀`);
+    console.log(`Backend 'EcoTasks' rodando em: http://localhost:${PORT} 🚀`);
 });
